@@ -196,6 +196,9 @@ h1 {
 }
 
 .hero-title {
+  overflow: visible !important;
+  padding-bottom: 0.08em;
+  line-height: 0.98;
   transform-style: preserve-3d;
 }
 
