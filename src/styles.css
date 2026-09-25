@@ -245,11 +245,14 @@ h1 {
 }
 
 .avatar-stage {
+  --look-x: 0;
+  --look-y: 0;
   position: relative;
   display: grid;
   min-height: 650px;
   place-items: center;
   isolation: isolate;
+  perspective: 1100px;
 }
 
 .avatar-glow {
@@ -264,6 +267,7 @@ h1 {
   box-shadow: 0 0 130px rgba(255, 122, 26, 0.38);
   opacity: 0.92;
   animation: rotateGlow 24s linear infinite;
+  translate: calc(var(--look-x) * -9px) calc(var(--look-y) * -7px);
   z-index: -2;
 }
 
@@ -273,6 +277,9 @@ h1 {
   aspect-ratio: 1;
   display: grid;
   place-items: center;
+  transform: translate3d(calc(var(--look-x) * 4px), calc(var(--look-y) * 3px), 0);
+  transition: filter 240ms ease;
+  transform-style: preserve-3d;
   z-index: 2;
 }
 
@@ -304,6 +311,10 @@ h1 {
   max-height: 78vh;
   object-fit: contain;
   filter: drop-shadow(0 36px 66px rgba(66, 35, 4, 0.24));
+  transform: translate3d(calc(var(--look-x) * 9px), calc(var(--look-y) * 5px), 0) rotate(calc(var(--look-x) * 1.35deg)) scale(1.015);
+  transform-origin: 50% 36%;
+  transform-style: preserve-3d;
+  will-change: transform;
   -webkit-mask-image: radial-gradient(ellipse at 50% 49%, #000 0 66%, rgba(0, 0, 0, 0.82) 73%, transparent 88%);
   mask-image: radial-gradient(ellipse at 50% 49%, #000 0 66%, rgba(0, 0, 0, 0.82) 73%, transparent 88%);
 }
@@ -353,13 +364,13 @@ h1 {
 .avatar-card-character {
   top: 24px;
   left: 4%;
-  transform: rotate(-3deg);
+  transform: translate3d(calc(var(--look-x) * -14px), calc(var(--look-y) * -10px), 42px) rotate(-3deg);
 }
 
 .avatar-card-tool {
   top: 52px;
   right: 0;
-  transform: rotate(2deg);
+  transform: translate3d(calc(var(--look-x) * 18px), calc(var(--look-y) * -12px), 58px) rotate(2deg);
 }
 
 .avatar-story-card {
@@ -395,13 +406,24 @@ h1 {
 .story-card-left {
   left: -4%;
   bottom: 92px;
-  transform: rotate(-2deg);
+  transform: translate3d(calc(var(--look-x) * -18px), calc(var(--look-y) * 12px), 68px) rotate(-2deg);
 }
 
 .story-card-right {
   right: -2%;
   bottom: 116px;
-  transform: rotate(3deg);
+  transform: translate3d(calc(var(--look-x) * 20px), calc(var(--look-y) * 14px), 76px) rotate(3deg);
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .avatar-glow {
+    translate: none;
+  }
+
+  .avatar-portrait,
+  .avatar-portrait img {
+    transform: none;
+  }
 }
 
 .section {

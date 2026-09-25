@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import SplitText from './components/SplitText';
 import './styles.css';
@@ -95,6 +95,93 @@ const toolGroups = [
   { label: 'Development Tools', value: 'Angular, Ionic, React Native, TypeScript, SCSS, HTML, CSS' },
 ];
 
+function AvatarStage() {
+  const stageRef = useRef(null);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage || window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return undefined;
+    }
+
+    const current = { x: 0, y: 0 };
+    const target = { x: 0, y: 0 };
+    let frameId = 0;
+
+    const render = () => {
+      current.x += (target.x - current.x) * 0.075;
+      current.y += (target.y - current.y) * 0.075;
+
+      stage.style.setProperty('--look-x', current.x.toFixed(4));
+      stage.style.setProperty('--look-y', current.y.toFixed(4));
+
+      if (Math.abs(target.x - current.x) > 0.001 || Math.abs(target.y - current.y) > 0.001) {
+        frameId = window.requestAnimationFrame(render);
+      } else {
+        frameId = 0;
+      }
+    };
+
+    const requestRender = () => {
+      if (!frameId) {
+        frameId = window.requestAnimationFrame(render);
+      }
+    };
+
+    const updateTarget = (event) => {
+      const rect = stage.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height * 0.42;
+
+      target.x = Math.max(-1, Math.min(1, (event.clientX - centerX) / (window.innerWidth * 0.42)));
+      target.y = Math.max(-1, Math.min(1, (event.clientY - centerY) / (window.innerHeight * 0.48)));
+      requestRender();
+    };
+
+    const resetTarget = () => {
+      target.x = 0;
+      target.y = 0;
+      requestRender();
+    };
+
+    window.addEventListener('pointermove', updateTarget, { passive: true });
+    window.addEventListener('blur', resetTarget);
+
+    return () => {
+      window.removeEventListener('pointermove', updateTarget);
+      window.removeEventListener('blur', resetTarget);
+      window.cancelAnimationFrame(frameId);
+    };
+  }, []);
+
+  return (
+    <div className="avatar-stage" ref={stageRef} aria-label="Rex character visual">
+      <div className="avatar-glow" />
+      <div className="avatar-card avatar-card-character">
+        <span>Character</span>
+        <strong>Rex</strong>
+        <small>Warm interface maker</small>
+      </div>
+      <div className="avatar-card avatar-card-tool">
+        <span>Tool</span>
+        <strong>Figma</strong>
+        <small>Prototype and visual systems</small>
+      </div>
+      <div className="avatar-portrait">
+        <img src="/rexd.png" alt="Rex's space character" />
+      </div>
+      <div className="avatar-story-card story-card-left">
+        <span>01</span>
+        <strong>UI Audit</strong>
+      </div>
+      <div className="avatar-story-card story-card-right">
+        <span>02</span>
+        <strong>Cleaner Flow</strong>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   return (
     <main>
@@ -154,30 +241,7 @@ function App() {
               <a href="mailto:diaojiali0118@gmail.com">Email Jiali</a>
             </div>
           </div>
-          <div className="avatar-stage" aria-label="Rex character visual">
-            <div className="avatar-glow" />
-            <div className="avatar-card avatar-card-character">
-              <span>Character</span>
-              <strong>Rex</strong>
-              <small>Warm interface maker</small>
-            </div>
-            <div className="avatar-card avatar-card-tool">
-              <span>Tool</span>
-              <strong>Figma</strong>
-              <small>Prototype and visual systems</small>
-            </div>
-            <div className="avatar-portrait">
-              <img src="/rexd.png" alt="Rex's space character" />
-            </div>
-            <div className="avatar-story-card story-card-left">
-              <span>01</span>
-              <strong>UI Audit</strong>
-            </div>
-            <div className="avatar-story-card story-card-right">
-              <span>02</span>
-              <strong>Cleaner Flow</strong>
-            </div>
-          </div>
+          <AvatarStage />
         </div>
       </section>
 
