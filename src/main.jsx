@@ -4,11 +4,11 @@ import './styles.css';
 
 const stops = [
   { id: 'hero', label: 'Start', message: "Hi, I'm Rex. Scroll down or tap Next and I'll guide you through Jiali's work, one stop at a time." },
-  { id: 'about', label: 'Stop 1 of 5', message: "First, meet the designer: a computer science background, a designer's eye, and the ability to build the interfaces she designs." },
+  { id: 'about', label: 'Stop 1 of 5', message: "First, meet the designer: a computer science background, a designer's eye, and the ability to build the interfaces he designs." },
   { id: 'gancao', label: 'Stop 2 of 5', message: 'Drag the comparison handle to see how a crowded healthcare form became calmer, clearer, and easier to scan.' },
   { id: 'clinic', label: 'Stop 3 of 5', message: 'The second case goes deeper into clinic management, with clearer cards, stronger hierarchy, and a cleaner workflow.' },
   { id: 'toolkit', label: 'Stop 4 of 5', message: 'These are the design and implementation skills behind the work you just saw.' },
-  { id: 'contact', label: 'Final stop', message: "That's the tour. If Jiali feels like a good fit for your team, her inbox is right here." },
+  { id: 'contact', label: 'Final stop', message: "That's the tour. If Jiali feels like a good fit for your team, his inbox is right here." },
 ];
 
 const cases = [
@@ -181,7 +181,7 @@ function App() {
       <main className="tour-route">
         <section className="tour-stop about-stop" id="about" data-stop>
           <div className="route-pin"><span>01</span></div>
-          <header className="stop-heading"><p>Meet the designer</p><h2>Clear thinking, thoughtful interfaces, real implementation.</h2><span>Who Jiali is, what she focuses on, and how she works.</span></header>
+          <header className="stop-heading"><p>Meet the designer</p><h2>Clear thinking, thoughtful interfaces, real implementation.</h2><span>Who Jiali is, what he focuses on, and how he works.</span></header>
           <div className="about-layout">
             <article><b>01</b><h3>Jiali Diao / Rex</h3><p>Computer Science graduate with experience in front-end development, UI redesign, and user-friendly digital interfaces.</p></article>
             <article><b>02</b><h3>Focus</h3><p>UI/UX Design, Front-End Development, Visual Design, and Product Design, with a focus on clarity, hierarchy, and responsive interfaces.</p></article>
