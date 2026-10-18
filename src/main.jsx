@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import SplitText from './components/SplitText';
 import './styles.css';
@@ -170,29 +170,47 @@ function AvatarStage() {
       <div className="avatar-portrait">
         <img src="/rexd.png" alt="Rex's space character" />
       </div>
-      <div className="avatar-story-card story-card-left">
-        <span>01</span>
-        <strong>UI Audit</strong>
-      </div>
-      <div className="avatar-story-card story-card-right">
-        <span>02</span>
-        <strong>Cleaner Flow</strong>
-      </div>
     </div>
   );
 }
 
 function App() {
+  const [activeSection, setActiveSection] = useState('hero');
+
+  useEffect(() => {
+    const sections = ['hero', 'about', 'work', 'experience', 'contact']
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: '-24% 0px -64% 0px' },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <main>
+    <>
+      <a className="skip-link" href="#main-content">Skip to content</a>
+      <main id="main-content">
       <header className="nav-shell">
-        <a className="brand" href="#hero" aria-label="Rex's space home">
+        <a className="brand" href="#hero" aria-label="Rex's space home" aria-current={activeSection === 'hero' ? 'page' : undefined}>
           <span>Rex's</span>
           <span>space</span>
         </a>
         <nav aria-label="Main navigation">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href}>
+            <a
+              key={item.href}
+              href={item.href}
+              className={activeSection === item.href.slice(1) ? 'is-active' : undefined}
+              aria-current={activeSection === item.href.slice(1) ? 'location' : undefined}
+            >
               {item.label}
             </a>
           ))}
@@ -381,7 +399,7 @@ function App() {
           <h2>Let's talk about the next product experience.</h2>
           <div className="contact-links">
             <a href="mailto:diaojiali0118@gmail.com">diaojiali0118@gmail.com</a>
-            <a href="https://app.notion.com/p/Jiali-Diao-UI-UX-Portfolio-6808732c69ac49e5a4b92f7709ea615e">
+            <a href="https://app.notion.com/p/Jiali-Diao-UI-UX-Portfolio-6808732c69ac49e5a4b92f7709ea615e" target="_blank" rel="noreferrer">
               Notion Portfolio
             </a>
           </div>
@@ -391,7 +409,8 @@ function App() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
 
