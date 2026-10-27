@@ -124,6 +124,22 @@ const alikeScreens = [
 ];
 
 function AlikeProffCaseStudy() {
+  const [isBoardOpen, setIsBoardOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isBoardOpen) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setIsBoardOpen(false);
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [isBoardOpen]);
+
   return (
     <section className="tour-stop case-stop alike-stop" id="alikeproff" data-stop>
       <div className="route-pin route-pin-green"><span>04</span></div>
@@ -156,6 +172,15 @@ function AlikeProffCaseStudy() {
           <p className="flow-note"><b>Returning user path</b> Log in moves directly from the entry choice to discovery.</p>
         </div>
 
+        <div className="design-board-block">
+          <div className="section-label"><span>Figma flow board</span><h4>The complete design system in context</h4></div>
+          <button className="design-board-preview" type="button" onClick={() => setIsBoardOpen(true)} aria-label="Open the complete AlikeProff Figma flow board">
+            <img src="/alikeproff-figma-board.png" alt="Complete AlikeProff Figma board showing sign-up, login, profile review, location, interests, and private chat screens" loading="lazy" />
+            <span>Open full board</span>
+          </button>
+          <p className="board-caption">The full workspace shows how registration paths, review states, location setup, and messaging were explored together.</p>
+        </div>
+
         <div className="screen-showcase">
           <div className="section-label"><span>Selected screens</span><h4>From profile setup to conversation</h4></div>
           <div className="phone-gallery">{alikeScreens.map((screen) => <figure key={screen.title}><div className="phone-frame"><img src={screen.src} alt={`${screen.title} screen from the AlikeProff mobile app concept`} loading="lazy" /></div><figcaption><strong>{screen.title}</strong><span>{screen.note}</span></figcaption></figure>)}</div>
@@ -164,6 +189,15 @@ function AlikeProffCaseStudy() {
         <div className="decision-grid alike-decisions"><h4>Key design decisions</h4><ul><li>Split registration into progressive steps with a visible progress indicator.</li><li>Used structured interest and lifestyle fields to support compatible discovery.</li><li>Introduced visibility controls during onboarding instead of hiding them in settings.</li><li>Kept a consistent purple-and-white visual language across registration and messaging.</li><li>Added Pin, Mute, Block, and Delete actions for basic conversation management.</li></ul></div>
         <p className="case-outcome"><strong>Reflection</strong>The project strengthened my understanding of form complexity, information hierarchy, personalization, and privacy. A future iteration would reduce required questions, improve validation and accessibility, and test the flow with users.</p>
       </article>
+
+      {isBoardOpen && (
+        <div className="board-lightbox" role="dialog" aria-modal="true" aria-labelledby="board-lightbox-title" onMouseDown={(event) => { if (event.target === event.currentTarget) setIsBoardOpen(false); }}>
+          <div className="board-lightbox-panel">
+            <div className="board-lightbox-header"><div><span>Figma flow board</span><h3 id="board-lightbox-title">AlikeProff screen architecture</h3></div><button type="button" onClick={() => setIsBoardOpen(false)} aria-label="Close full board view" title="Close">×</button></div>
+            <div className="board-lightbox-canvas"><img src="/alikeproff-figma-board.png" alt="Complete AlikeProff Figma board showing the mobile application screen architecture" /></div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
