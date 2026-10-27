@@ -4,10 +4,11 @@ import './styles.css';
 
 const stops = [
   { id: 'hero', label: 'Start', message: "Hi, I'm Rex. Scroll down or tap Next and I'll guide you through Jiali's work, one stop at a time." },
-  { id: 'about', label: 'Stop 1 of 5', message: "First, meet the designer: a computer science background, a designer's eye, and the ability to build the interfaces he designs." },
-  { id: 'gancao', label: 'Stop 2 of 5', message: 'Drag the comparison handle to see how a crowded healthcare form became calmer, clearer, and easier to scan.' },
-  { id: 'clinic', label: 'Stop 3 of 5', message: 'The second case goes deeper into clinic management, with clearer cards, stronger hierarchy, and a cleaner workflow.' },
-  { id: 'toolkit', label: 'Stop 4 of 5', message: 'These are the design and implementation skills behind the work you just saw.' },
+  { id: 'about', label: 'Stop 1 of 6', message: "First, meet the designer: a computer science background, a designer's eye, and the ability to build the interfaces he designs." },
+  { id: 'gancao', label: 'Stop 2 of 6', message: 'Drag the comparison handle to see how a crowded healthcare form became calmer, clearer, and easier to scan.' },
+  { id: 'clinic', label: 'Stop 3 of 6', message: 'The second case goes deeper into clinic management, with clearer cards, stronger hierarchy, and a cleaner workflow.' },
+  { id: 'alikeproff', label: 'Stop 4 of 6', message: 'This academic project explores how progressive onboarding, privacy choices, and shared interests can support more meaningful social discovery.' },
+  { id: 'toolkit', label: 'Stop 5 of 6', message: 'These are the design and implementation skills behind the work you just saw.' },
   { id: 'contact', label: 'Final stop', message: "That's the tour. If Jiali feels like a good fit for your team, his inbox is right here." },
 ];
 
@@ -115,6 +116,58 @@ function CaseStudy({ item }) {
   );
 }
 
+const alikeScreens = [
+  { src: '/alikeproff-account.jpg', title: 'Account setup', note: 'Essential credentials begin the three-step flow.' },
+  { src: '/alikeproff-privacy.jpg', title: 'Privacy controls', note: 'Visibility decisions appear during profile creation.' },
+  { src: '/alikeproff-interests.jpg', title: 'Interests & lifestyle', note: 'Structured fields support richer self-expression.' },
+  { src: '/alikeproff-messaging.jpg', title: 'Messaging', note: 'Conversation and management tools complete the experience.' },
+];
+
+function AlikeProffCaseStudy() {
+  return (
+    <section className="tour-stop case-stop alike-stop" id="alikeproff" data-stop>
+      <div className="route-pin route-pin-green"><span>04</span></div>
+      <header className="stop-heading"><p>Academic project · Case study</p><h2>Designing connection with intention.</h2><span>UX/UI Design / Figma / Mobile Application</span></header>
+      <article className="case-sheet alike-sheet">
+        <div className="case-summary"><div><span className="case-number">Case 03</span><h3>AlikeProff — Personalized Social Discovery</h3></div><p>AlikeProff is a mobile app concept designed to help people build meaningful connections through shared interests, hobbies, lifestyles, and personal preferences.</p></div>
+        <div className="project-meta" aria-label="Project details"><span>Role · UX/UI Designer</span><span>Tool · Figma</span><span>Type · Class Project</span></div>
+        <div className="case-brief"><div><strong>The problem</strong><p>Detailed profiles can improve social discovery, but long onboarding flows create effort and personal-data collection raises privacy concerns.</p></div><div><strong>The design question</strong><p>How might we collect useful information for personalized discovery while keeping onboarding clear, manageable, and respectful of user choice?</p></div></div>
+
+        <div className="journey-block">
+          <div className="section-label"><span>Information architecture</span><h4>A three-stage onboarding journey</h4></div>
+          <div className="journey-strip">
+            <article><b>01</b><h5>Account information</h5><p>Name, email, phone number, and password establish the account.</p></article>
+            <article><b>02</b><h5>Personal information</h5><p>Profile details pair with visibility controls for selected information.</p></article>
+            <article><b>03</b><h5>Interests & lifestyle</h5><p>Hobbies, activities, preferences, and a biography shape discovery.</p></article>
+          </div>
+        </div>
+
+        <div className="user-flow-block">
+          <div className="section-label"><span>User flow</span><h4>From entry to a meaningful conversation</h4></div>
+          <ol className="user-flow" aria-label="AlikeProff user flow">
+            <li className="flow-start"><span>Entry</span><strong>Open AlikeProff</strong><small>Launch the app</small></li>
+            <li className="flow-choice"><span>Choice</span><strong>Log in or sign up</strong><small>Returning and new users split here</small></li>
+            <li><span>Step 01</span><strong>Account information</strong><small>Create credentials</small></li>
+            <li><span>Step 02</span><strong>Personal information</strong><small>Set profile details and visibility</small></li>
+            <li><span>Step 03</span><strong>Interests & lifestyle</strong><small>Describe preferences and personality</small></li>
+            <li><span>Discovery</span><strong>Profile ready</strong><small>Explore compatible people</small></li>
+            <li className="flow-end"><span>Connection</span><strong>Start a conversation</strong><small>Message, pin, mute, block, or delete</small></li>
+          </ol>
+          <p className="flow-note"><b>Returning user path</b> Log in moves directly from the entry choice to discovery.</p>
+        </div>
+
+        <div className="screen-showcase">
+          <div className="section-label"><span>Selected screens</span><h4>From profile setup to conversation</h4></div>
+          <div className="phone-gallery">{alikeScreens.map((screen) => <figure key={screen.title}><div className="phone-frame"><img src={screen.src} alt={`${screen.title} screen from the AlikeProff mobile app concept`} loading="lazy" /></div><figcaption><strong>{screen.title}</strong><span>{screen.note}</span></figcaption></figure>)}</div>
+        </div>
+
+        <div className="decision-grid alike-decisions"><h4>Key design decisions</h4><ul><li>Split registration into progressive steps with a visible progress indicator.</li><li>Used structured interest and lifestyle fields to support compatible discovery.</li><li>Introduced visibility controls during onboarding instead of hiding them in settings.</li><li>Kept a consistent purple-and-white visual language across registration and messaging.</li><li>Added Pin, Mute, Block, and Delete actions for basic conversation management.</li></ul></div>
+        <p className="case-outcome"><strong>Reflection</strong>The project strengthened my understanding of form complexity, information hierarchy, personalization, and privacy. A future iteration would reduce required questions, improve validation and accessibility, and test the flow with users.</p>
+      </article>
+    </section>
+  );
+}
+
 function Guide({ activeIndex, onGoTo }) {
   const [manuallyCollapsed, setManuallyCollapsed] = useState(false);
   const [scrolling, setScrolling] = useState(false);
@@ -192,8 +245,10 @@ function App() {
 
         {cases.map((item) => <CaseStudy item={item} key={item.id} />)}
 
+        <AlikeProffCaseStudy />
+
         <section className="tour-stop toolkit-stop" id="toolkit" data-stop>
-          <div className="route-pin"><span>04</span></div>
+          <div className="route-pin"><span>05</span></div>
           <header className="stop-heading"><p>The toolkit</p><h2>An interface journey, not a static resume.</h2><span>Design judgment supported by practical front-end implementation.</span></header>
           <div className="skills-grid">{skills.map((group, index) => <article key={group.title}><div className="skill-heading"><b aria-hidden="true">{index === 0 ? '⌕' : index === 1 ? '▭' : '✦'}</b><h3>{group.title}</h3></div><div className="skill-items">{group.items.map((item) => <span key={item}>{item}</span>)}</div></article>)}</div>
         </section>
